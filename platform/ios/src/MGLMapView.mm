@@ -240,11 +240,11 @@ public:
 @property (nonatomic) UIActionSheet *attributionSheet;
 @property (nonatomic, readwrite) MGLStyle *style;
 @property (nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
+@property (nonatomic) UITapGestureRecognizer *doubleTap;
 @property (nonatomic) UITapGestureRecognizer *twoFingerTap;
 @property (nonatomic) UIPanGestureRecognizer *pan;
 @property (nonatomic) UIPinchGestureRecognizer *pinch;
 @property (nonatomic) UIRotationGestureRecognizer *rotate;
-@property (nonatomic) UITapGestureRecognizer *doubleTap;
 @property (nonatomic) UILongPressGestureRecognizer *quickZoom;
 @property (nonatomic) UIPanGestureRecognizer *twoFingerDrag;
 /// Mapping from reusable identifiers to annotation images.
@@ -546,7 +546,7 @@ public:
     _quickZoom = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleQuickZoomGesture:)];
     _quickZoom.numberOfTapsRequired = 1;
     _quickZoom.minimumPressDuration = 0;
-    [_quickZoom requireGestureRecognizerToFail:doubleTap];
+    [_quickZoom requireGestureRecognizerToFail:_doubleTap];
     [self addGestureRecognizer:_quickZoom];
 
     // observe app activity

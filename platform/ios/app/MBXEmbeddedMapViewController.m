@@ -1,12 +1,4 @@
-//
-//  MBXEmbededMapViewController.m
-//  ios
-//
-//  Created by David Chiles on 3/7/17.
-//  Copyright © 2017 Mapbox. All rights reserved.
-//
-
-#import "MBXEmbededMapViewController.h"
+#import "MBXEmbeddedMapViewController.h"
 #import <Mapbox/Mapbox.h>
 
 typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
@@ -17,15 +9,16 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
 };
 
 
-@interface MBXEmbededMapViewController () <UIScrollViewDelegate>
+@interface MBXEmbeddedMapViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) MGLMapView *mapView;
 
 @end
 
-@implementation MBXEmbededMapViewController
+@implementation MBXEmbeddedMapViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     UIRotationGestureRecognizer *gestureRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotation:)];
@@ -49,7 +42,7 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
     
     //Create list of all the possible control titles
     NSMutableArray <UIView*>*items = [[NSMutableArray alloc] init];
-    for(NSInteger index =0; index < 4; index++) {
+    for(NSInteger index = 0; index < 4; index++) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
         view.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -82,11 +75,9 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
     [self.view addSubview:stackView];
 }
 
-- (void)didSwitch:(UISwitch *)sw {
-    [self switchContorl:sw.tag];
-    if (sw.tag == MBXEmbeddedControlRotation) {
-        
-    }
+- (void)didSwitch:(UISwitch *)controlSwitch
+{
+    [self switchControl:controlSwitch.tag];
 }
 
 - (void)rotation:(UIRotationGestureRecognizer *)rotationGesture
@@ -94,7 +85,8 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
     self.mapView.transform = CGAffineTransformRotate(rotationGesture.view.transform, rotationGesture.rotation);
 }
 
-- (void)switchContorl:(MBXEmbeddedControl) control {
+- (void)switchControl:(MBXEmbeddedControl) control
+{
     switch (control) {
         case MBXEmbeddedControlZoom:
             self.mapView.zoomEnabled = !self.mapView.zoomEnabled;
@@ -111,7 +103,8 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
     }
 }
 
-- (BOOL)statusForControl:(MBXEmbeddedControl) control {
+- (BOOL)statusForControl:(MBXEmbeddedControl) control
+{
     switch (control) {
         case MBXEmbeddedControlZoom:
             return self.mapView.zoomEnabled;
@@ -133,8 +126,8 @@ typedef NS_ENUM(NSInteger, MBXEmbeddedControl) {
 
 #pragma mark Class method
 
-
-+ (NSString *)titleForControl:(MBXEmbeddedControl) control {
++ (NSString *)titleForControl:(MBXEmbeddedControl) control
+{
     switch (control) {
         case MBXEmbeddedControlZoom:
             return @"Zoom Enabled";

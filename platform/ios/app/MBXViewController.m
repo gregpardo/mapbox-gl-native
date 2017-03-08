@@ -5,7 +5,7 @@
 #import "MBXOfflinePacksTableViewController.h"
 #import "MBXAnnotationView.h"
 #import "MBXUserLocationAnnotationView.h"
-#import "MBXEmbededMapViewController.h"
+#import "MBXEmbeddedMapViewController.h"
 
 #import <Mapbox/Mapbox.h>
 
@@ -82,8 +82,7 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
     MBXSettingsMiscellaneousShowZoomLevel,
     MBXSettingsMiscellaneousScrollView,
     MBXSettingsMiscellaneousPrintLogFile,
-    MBXSettingsMiscellaneousDeleteLogFile
-    
+    MBXSettingsMiscellaneousDeleteLogFile,
 };
 
 @interface MBXDroppedPinAnnotation : MGLPointAnnotation
@@ -353,7 +352,7 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
                 @"Start World Tour",
                 [NSString stringWithFormat:@"%@ Custom User Dot", (_customUserLocationAnnnotationEnabled ? @"Disable" : @"Enable")],
                 [NSString stringWithFormat:@"%@ Zoom Level", (_showZoomLevelEnabled ? @"Hide" :@"Show")],
-                @"Embeded Map View"
+                @"Embeded Map View",
             ]];
 
             if (self.debugLoggingEnabled)
@@ -622,9 +621,8 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
                 case MBXSettingsMiscellaneousScrollView:
                 {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    MBXEmbededMapViewController *embeddedMapViewController = (MBXEmbededMapViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MBXEmbededMapViewController"];
+                    MBXEmbeddedMapViewController *embeddedMapViewController = (MBXEmbeddedMapViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MBXEmbeddedMapViewController"];
                     [self.navigationController pushViewController:embeddedMapViewController animated:YES];
-                    
                     break;
                 }
                 default:

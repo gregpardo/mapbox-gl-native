@@ -203,10 +203,10 @@
             </objects>
             <point key="canvasLocation" x="554" y="350"/>
         </scene>
-        <!--Embeded Map View Controller-->
+        <!--Embedded Map View Controller-->
         <scene sceneID="dGM-LS-4VE">
             <objects>
-                <viewController storyboardIdentifier="MBXEmbededMapViewController" id="Tsi-Cv-L66" customClass="MBXEmbededMapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MBXEmbeddedMapViewController" id="Tsi-Cv-L66" customClass="MBXEmbeddedMapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xne-oT-1Cv"/>
                         <viewControllerLayoutGuide type="bottom" id="bxa-Bm-Qun"/>
