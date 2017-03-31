@@ -33,7 +33,7 @@ public:
     float right = 0;
     float angle = 0;
 
-    explicit operator bool() const { return image && (*image).pos.hasArea(); }
+    bool valid() const { return image && (*image).pos.hasArea(); }
 };
 
 PositionedIcon shapeIcon(const SpriteAtlasElement&, const std::array<float, 2>& iconOffset, const float iconRotation);

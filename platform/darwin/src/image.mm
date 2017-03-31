@@ -9,7 +9,7 @@ struct CFHandle {
     CFHandle(T t_): t(t_) {}
     ~CFHandle() { Releaser(t); }
     T operator*() { return t; }
-    operator bool() { return t; }
+    bool valid() { return t; }
 private:
     T t;
 };
@@ -30,7 +30,7 @@ CGImageRef CGImageFromMGLPremultipliedImage(mbgl::PremultipliedImage&& src) {
         NULL, src.data.get(), src.bytes(), [](void*, const void* data, size_t) {
             delete[] reinterpret_cast<const decltype(src.data)::element_type*>(data);
         }));
-    if (!provider) {
+    if (!provider.valid()) {
         return nil;
     }
 
@@ -38,7 +38,7 @@ CGImageRef CGImageFromMGLPremultipliedImage(mbgl::PremultipliedImage&& src) {
     src.data.release();
 
     CGColorSpaceHandle colorSpace(CGColorSpaceCreateDeviceRGB());
-    if (!colorSpace) {
+    if (!colorSpace.valid()) {
         return nil;
     }
 
@@ -60,7 +60,7 @@ mbgl::PremultipliedImage MGLPremultipliedImageFromCGImage(CGImageRef src) {
     mbgl::PremultipliedImage image({ static_cast<uint32_t>(width), static_cast<uint32_t>(height) });
 
     CGColorSpaceHandle colorSpace(CGColorSpaceCreateDeviceRGB());
-    if (!colorSpace) {
+    if (!colorSpace.valid()) {
         throw std::runtime_error("CGColorSpaceCreateDeviceRGB failed");
     }
 
@@ -71,7 +71,7 @@ mbgl::PremultipliedImage MGLPremultipliedImageFromCGImage(CGImageRef src) {
     CGContextHandle context(CGBitmapContextCreate(
         image.data.get(), width, height, bitsPerComponent, bytesPerRow, *colorSpace,
         kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-    if (!context) {
+    if (!context.valid()) {
         throw std::runtime_error("CGBitmapContextCreate failed");
     }
 
@@ -87,17 +87,17 @@ PremultipliedImage decodeImage(const std::string& source) {
     CFDataHandle data(CFDataCreateWithBytesNoCopy(
         kCFAllocatorDefault, reinterpret_cast<const unsigned char*>(source.data()), source.size(),
         kCFAllocatorNull));
-    if (!data) {
+    if (!data.valid()) {
         throw std::runtime_error("CFDataCreateWithBytesNoCopy failed");
     }
 
     CGImageSourceHandle imageSource(CGImageSourceCreateWithData(*data, NULL));
-    if (!imageSource) {
+    if (!imageSource.valid()) {
         throw std::runtime_error("CGImageSourceCreateWithData failed");
     }
 
     CGImageHandle image(CGImageSourceCreateImageAtIndex(*imageSource, 0, NULL));
-    if (!image) {
+    if (!image.valid()) {
         throw std::runtime_error("CGImageSourceCreateImageAtIndex failed");
     }
 

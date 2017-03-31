@@ -18,7 +18,7 @@ public:
         };
     }
 
-    explicit operator bool() const {
+    bool valid() const {
         return duration || delay;
     }
 };

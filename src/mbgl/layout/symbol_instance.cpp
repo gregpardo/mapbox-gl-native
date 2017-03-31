@@ -23,34 +23,37 @@ SymbolInstance::SymbolInstance(Anchor& anchor,
                                const std::size_t featureIndex_) :
     point(anchor.point),
     index(index_),
-    hasText(shapedTextOrientations.first || shapedTextOrientations.second),
-    hasIcon(shapedIcon),
+    hasText(shapedTextOrientations.first.valid() || shapedTextOrientations.second.valid()),
+    hasIcon(shapedIcon.valid()),
 
     // Create the collision features that will be used to check whether this symbol instance can be placed
-    textCollisionFeature(line, anchor, shapedTextOrientations.second ?: shapedTextOrientations.first, textBoxScale, textPadding, textPlacement, indexedFeature),
+    textCollisionFeature(line, anchor, shapedTextOrientations.second.valid() ? shapedTextOrientations.second : shapedTextOrientations.first, textBoxScale, textPadding, textPlacement, indexedFeature),
     iconCollisionFeature(line, anchor, shapedIcon, iconBoxScale, iconPadding, iconPlacement, indexedFeature),
     featureIndex(featureIndex_) {
 
     // Create the quads used for rendering the icon and glyphs.
     if (addToBuffers) {
-        if (shapedIcon) {
+        if (shapedIcon.valid()) {
             iconQuad = getIconQuad(anchor, shapedIcon, line, layout, iconPlacement, shapedTextOrientations.first);
         }
-        if (shapedTextOrientations.first) {
+        if (shapedTextOrientations.first.valid()) {
             auto quads = getGlyphQuads(anchor, shapedTextOrientations.first, textBoxScale, line, layout, textPlacement, face);
             glyphQuads.insert(glyphQuads.end(), quads.begin(), quads.end());
         }
-        if (shapedTextOrientations.second) {
+        if (shapedTextOrientations.second.valid()) {
             auto quads = getGlyphQuads(anchor, shapedTextOrientations.second, textBoxScale, line, layout, textPlacement, face);
             glyphQuads.insert(glyphQuads.end(), quads.begin(), quads.end());
         }
     }
 
-    if (shapedTextOrientations.first && shapedTextOrientations.second) {
+    bool horizontalTextShaping = shapedTextOrientations.first.valid();
+    bool verticalTextShaping = shapedTextOrientations.second.valid();
+
+    if (horizontalTextShaping && verticalTextShaping) {
         writingModes = WritingModeType::Horizontal | WritingModeType::Vertical;
-    } else if (shapedTextOrientations.first) {
+    } else if (horizontalTextShaping) {
         writingModes = WritingModeType::Horizontal;
-    } else if (shapedTextOrientations.second) {
+    } else if (verticalTextShaping) {
         writingModes = WritingModeType::Vertical;
     } else {
         writingModes = WritingModeType::None;

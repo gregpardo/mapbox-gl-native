@@ -130,8 +130,8 @@ Database &Database::operator=(Database &&other) {
 Database::~Database() {
 }
 
-Database::operator bool() const {
-    return impl.operator bool();
+bool Database::valid() const {
+    return bool(impl);
 }
 
 void Database::setBusyTimeout(std::chrono::milliseconds timeout) {
@@ -191,9 +191,9 @@ Statement &Statement::operator=(Statement &&other) {
 Statement::~Statement() {
 }
 
-Statement::operator bool() const {
+bool Statement::valid() const {
     assert(impl);
-    return impl.operator bool();
+    return bool(impl);
 }
 
 template void Statement::bind(int, int64_t);

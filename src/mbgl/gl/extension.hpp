@@ -18,7 +18,7 @@ public:
     ExtensionFunction(const ProcAddress ptr_) : ptr(ptr_) {
     }
 
-    explicit operator bool() const {
+    bool valid() const {
         return ptr;
     }
 

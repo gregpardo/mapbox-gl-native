@@ -20,7 +20,7 @@ class OptionalNSObjectValue {
 public:
     OptionalNSObjectValue(NSObject * _Nullable _value) : value(_value) {}
     
-    explicit operator bool() const {
+    bool valid() const {
         return value;
     }
     

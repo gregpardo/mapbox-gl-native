@@ -35,7 +35,7 @@ public:
         : begin(now + transition.delay.value_or(Duration::zero())),
           end(begin + transition.duration.value_or(Duration::zero())),
           value(std::move(value_)) {
-        if (transition) {
+        if (transition.valid()) {
             prior = { std::move(prior_) };
         }
     }

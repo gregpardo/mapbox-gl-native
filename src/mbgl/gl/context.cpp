@@ -75,7 +75,7 @@ void Context::initializeExtensions(const std::function<gl::ProcAddress(const cha
 }
 
 void Context::enableDebugging() {
-    if (!debugging || !debugging->debugMessageControl || !debugging->debugMessageCallback) {
+    if (!debugging || !debugging->debugMessageControl.valid() || !debugging->debugMessageCallback.valid()) {
         return;
     }
 
@@ -195,15 +195,15 @@ UniqueTexture Context::createTexture() {
 }
 
 bool Context::supportsVertexArrays() const {
-    return vertexArray &&
-           vertexArray->genVertexArrays &&
-           vertexArray->bindVertexArray &&
-           vertexArray->deleteVertexArrays;
+    return bool(vertexArray) &&
+           vertexArray->genVertexArrays.valid() &&
+           vertexArray->bindVertexArray.valid() &&
+           vertexArray->deleteVertexArrays.valid();
 }
 
 #if MBGL_HAS_BINARY_PROGRAMS
 bool Context::supportsProgramBinaries() const {
-    return programBinary && programBinary->programBinary && programBinary->getProgramBinary;
+    return programBinary && programBinary->programBinary.valid() && programBinary->getProgramBinary.valid();
 }
 
 optional<std::pair<BinaryProgramFormat, std::string>>

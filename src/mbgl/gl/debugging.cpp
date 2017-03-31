@@ -9,9 +9,9 @@ namespace gl {
 
 DebugGroup::DebugGroup(const Context& context_, const std::string& name) : context(context_) {
     if (auto debugging = context.getDebuggingExtension()) {
-        if (debugging->pushDebugGroup) {
+        if (debugging->pushDebugGroup.valid()) {
             debugging->pushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, GLsizei(name.size()), name.c_str());
-        } else if (debugging->pushGroupMarkerEXT) {
+        } else if (debugging->pushGroupMarkerEXT.valid()) {
             debugging->pushGroupMarkerEXT(GLsizei(name.size() + 1), name.c_str());
         }
     }
@@ -19,9 +19,9 @@ DebugGroup::DebugGroup(const Context& context_, const std::string& name) : conte
 
 DebugGroup::~DebugGroup() {
     if (auto debugging = context.getDebuggingExtension()) {
-        if (debugging->popDebugGroup) {
+        if (debugging->popDebugGroup.valid()) {
             debugging->popDebugGroup();
-        } else if (debugging->popGroupMarkerEXT) {
+        } else if (debugging->popGroupMarkerEXT.valid()) {
             debugging->popGroupMarkerEXT();
         }
     }

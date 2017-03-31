@@ -256,7 +256,7 @@ void SymbolLayout::prepare(uintptr_t tileUID,
                     /* bidirectional algorithm object */ bidi);
 
                 // Add the glyphs we need for this label to the glyph atlas.
-                if (result) {
+                if (result.valid()) {
                     glyphAtlas.addGlyphs(tileUID, text, layout.get<TextFont>(), glyphSet, face);
                 }
 
@@ -290,7 +290,8 @@ void SymbolLayout::prepare(uintptr_t tileUID,
         }
 
         // if either shapedText or icon position is present, add the feature
-        if (shapedTextOrientations.first || shapedIcon) {
+        bool horizontalTextShaping = shapedTextOrientations.first.valid();
+        if (horizontalTextShaping || shapedIcon.valid()) {
             addFeature(std::distance(features.begin(), it), feature, shapedTextOrientations, shapedIcon, face);
         }
         
@@ -357,12 +358,13 @@ void SymbolLayout::addFeature(const std::size_t index,
 
     if (layout.get<SymbolPlacement>() == SymbolPlacementType::Line) {
         auto clippedLines = util::clipLines(feature.geometry, 0, 0, util::EXTENT, util::EXTENT);
+        bool verticalTextShaping = shapedTextOrientations.second.valid();
         for (const auto& line : clippedLines) {
             Anchors anchors = getAnchors(line,
                                          symbolSpacing,
                                          textMaxAngle,
-                                         (shapedTextOrientations.second ?: shapedTextOrientations.first).left,
-                                         (shapedTextOrientations.second ?: shapedTextOrientations.first).right,
+                                         (verticalTextShaping ? shapedTextOrientations.second : shapedTextOrientations.first).left,
+                                         (verticalTextShaping ? shapedTextOrientations.second : shapedTextOrientations.first).right,
                                          shapedIcon.left,
                                          shapedIcon.right,
                                          glyphSize,

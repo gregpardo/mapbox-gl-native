@@ -33,7 +33,7 @@ SymbolQuad getIconQuad(const Anchor& anchor,
     Point<float> br;
     Point<float> bl;
 
-    if (layout.get<IconTextFit>() != IconTextFitType::None && shapedText) {
+    if (layout.get<IconTextFit>() != IconTextFitType::None && shapedText.valid()) {
         auto iconWidth = right - left;
         auto iconHeight = bottom - top;
         auto size = layout.get<TextSize>() / 24.0f;
@@ -307,7 +307,7 @@ SymbolQuads getGlyphQuads(Anchor& anchor,
         const Glyph &glyph = face_it->second;
         const Rect<uint16_t> &rect = glyph.rect;
 
-        if (!glyph)
+        if (!glyph.valid())
             continue;
 
         if (!rect.hasArea())

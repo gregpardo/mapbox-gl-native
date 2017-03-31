@@ -48,7 +48,7 @@ TEST(API, TEST_REQUIRES_SERVER(RenderMissingTile)) {
     // Are you seeing this test fail? Make sure you don't have a server running on port 3001!
     map.setStyleJSON(style);
     map.renderStill(view, [&](std::exception_ptr err) {
-        ASSERT_TRUE(err.operator bool());
+        ASSERT_TRUE(bool(err));
         try {
             std::rethrow_exception(err);
         } catch (const std::exception& ex) {

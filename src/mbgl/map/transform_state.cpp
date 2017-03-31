@@ -216,7 +216,7 @@ double TransformState::scaleZoom(double s) const {
 }
 
 ScreenCoordinate TransformState::latLngToScreenCoordinate(const LatLng& latLng) const {
-    if (!size) {
+    if (!size.valid()) {
         return {};
     }
 
@@ -229,7 +229,7 @@ ScreenCoordinate TransformState::latLngToScreenCoordinate(const LatLng& latLng) 
 }
 
 LatLng TransformState::screenCoordinateToLatLng(const ScreenCoordinate& point, LatLng::WrapMode wrapMode) const {
-    if (!size) {
+    if (!size.valid()) {
         return {};
     }
 

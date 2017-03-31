@@ -331,7 +331,7 @@ const constexpr BindVertexArray::Type BindVertexArray::Default;
 
 void BindVertexArray::Set(const Type& value, const Context& context) {
     if (auto vertexArray = context.getVertexArrayExtension()) {
-        if (vertexArray->bindVertexArray) {
+        if (vertexArray->bindVertexArray.valid()) {
             MBGL_CHECK_ERROR(vertexArray->bindVertexArray(value));
         }
     }

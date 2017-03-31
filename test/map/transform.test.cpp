@@ -352,13 +352,13 @@ TEST(Transform, Padding) {
     EdgeInsets padding;
 
     padding.top = 0;
-    ASSERT_FALSE(bool(padding));
+    ASSERT_FALSE(padding.valid());
 
     padding.top = NAN;
-    ASSERT_FALSE(bool(padding));
+    ASSERT_FALSE(padding.valid());
 
     padding.top = 1000.0 / 2.0;
-    ASSERT_TRUE(bool(padding));
+    ASSERT_TRUE(padding.valid());
 
     const LatLng shiftedCenter = transform.getLatLng(padding);
     ASSERT_NE(trueCenter.latitude, shiftedCenter.latitude);

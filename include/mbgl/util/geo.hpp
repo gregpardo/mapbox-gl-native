@@ -48,7 +48,7 @@ public:
         else if (longitude < 0 && end.longitude > 0) longitude += util::DEGREES_MAX;
     }
 
-    explicit operator bool() const {
+    bool valid() const {
         return !(std::isnan(latitude) || std::isnan(longitude));
     }
 
@@ -73,7 +73,7 @@ public:
     ProjectedMeters(double n = 0, double e = 0)
         : northing(n), easting(e) {}
 
-    explicit operator bool() const {
+    bool valid() const {
         return !(std::isnan(northing) || std::isnan(easting));
     }
 };
@@ -197,7 +197,7 @@ public:
     EdgeInsets(const double t, const double l, const double b, const double r)
         : top(t), left(l), bottom(b), right(r) {}
 
-    explicit operator bool() const {
+    bool valid() const {
         return !(std::isnan(top) || std::isnan(left) || std::isnan(bottom) || std::isnan(right))
             && (top || left || bottom || right);
     }

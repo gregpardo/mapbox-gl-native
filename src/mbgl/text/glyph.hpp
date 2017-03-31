@@ -16,7 +16,7 @@ namespace mbgl {
 GlyphRange getGlyphRange(char16_t glyph);
 
 struct GlyphMetrics {
-    explicit operator bool() const {
+    bool valid() const {
         return !(width == 0 && height == 0 && advance == 0);
     }
 
@@ -42,8 +42,8 @@ struct Glyph {
     explicit Glyph(Rect<uint16_t> rect_, GlyphMetrics metrics_)
         : rect(std::move(rect_)), metrics(std::move(metrics_)) {}
 
-    explicit operator bool() const {
-        return metrics || rect.hasArea();
+    bool valid() const {
+        return metrics.valid() || rect.hasArea();
     }
 
     const Rect<uint16_t> rect;
@@ -77,7 +77,7 @@ class Shaping {
     int32_t right;
     WritingModeType writingMode;
 
-    explicit operator bool() const { return !positionedGlyphs.empty(); }
+    bool valid() const { return !positionedGlyphs.empty(); }
 };
 
 class SDFGlyph {
