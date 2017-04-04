@@ -350,9 +350,9 @@ void NativeMapView::setStyleJson(jni::JNIEnv& env, jni::String json) {
 }
 
 void NativeMapView::setLatLngBounds(jni::JNIEnv& env, jni::Object<mbgl::android::LatLngBounds> jBounds) {
-    if(jBounds==NULL){
+    if (jBounds) {
         map->setLatLngBounds(mbgl::LatLngBounds::world());
-    }else{
+    } else {
         map->setLatLngBounds(mbgl::android::LatLngBounds::getLatLngBounds(env, jBounds));
     }
 }

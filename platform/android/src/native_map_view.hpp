@@ -111,7 +111,7 @@ public:
 
     void setStyleJson(jni::JNIEnv&, jni::String);
 
-    void setLatLngBounds(jni::JNIEnv& env, jni::Object<mbgl::android::LatLngBounds>);
+    void setLatLngBounds(jni::JNIEnv&, jni::Object<mbgl::android::LatLngBounds>);
 
     void cancelTransitions(jni::JNIEnv&);
 
