@@ -54,7 +54,7 @@
 #import "MGLUserLocation_Private.h"
 #import "MGLAnnotationImage_Private.h"
 #import "MGLAnnotationView_Private.h"
-#import "MGLScaleBarView_Private.h"
+#import "MGLScaleBarView.h"
 #import "MGLStyle_Private.h"
 #import "MGLStyleLayer_Private.h"
 #import "MGLMapboxEvents.h"
@@ -506,7 +506,6 @@ public:
     _scaleBarView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_scaleBarView];
     _scaleControlViewConstraints = [NSMutableArray array];
-    _showsScale = YES;
     
     // setup interaction
     //
@@ -4806,8 +4805,8 @@ public:
 
     [self updateCompass];
     
-    if (self.showsScale) {
-        self.scaleBarView.metersPerPoint = [self metersPerPointAtLatitude:self.centerCoordinate.latitude];
+    if (!self.scaleBarView.hidden) {
+        [(MGLScaleBarView *)self.scaleBarView setMetersPerPoint:[self metersPerPointAtLatitude:self.centerCoordinate.latitude]];
     }
     
     if ([self.delegate respondsToSelector:@selector(mapViewRegionIsChanging:)])
@@ -5200,7 +5199,7 @@ public:
 
 - (void)notifyScaleBarGestureDidEnd
 {
-    [self.scaleBarView fadeOut];
+    [(MGLScaleBarView *)self.scaleBarView fadeOut];
 }
 
 - (void)updateCompass
