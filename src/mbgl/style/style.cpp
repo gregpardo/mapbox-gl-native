@@ -489,9 +489,11 @@ RenderData Style::getRenderData(MapDebugOptions debugOptions, float angle) const
                 }
                 if (!skip) {
                     sortedTilesForInsertion.emplace_back(tile);
+                    tile.used = true;
                 }
             } else {
                 sortedTilesForInsertion.emplace_back(tile);
+                tile.used = true;
             }
 
         }
