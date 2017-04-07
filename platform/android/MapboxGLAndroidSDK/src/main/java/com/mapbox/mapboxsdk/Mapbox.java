@@ -55,8 +55,18 @@ public final class Mapbox {
    * @return Mapbox Access Token
    */
   public static String getAccessToken() {
+    validateMapbox();
     validateAccessToken();
     return INSTANCE.accessToken;
+  }
+
+  /**
+   * Runtime validation of Mapbox creation.
+   */
+  private static void validateMapbox() throws InvalidAccessTokenException {
+    if (INSTANCE == null) {
+      throw new InvalidAccessTokenException();
+    }
   }
 
   /**
