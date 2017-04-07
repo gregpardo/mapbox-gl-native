@@ -493,7 +493,6 @@ public class SymbolLayerTest extends BaseStyleTest {
     assertEquals(1, ((IntervalStops) layer.getIconImage().getFunction().getStops()).size());
   }
 
-
   @Test
   public void testIconImageAsIdentitySourceFunction() {
     checkViewIsDisplayed(R.id.mapView);
@@ -538,6 +537,7 @@ public class SymbolLayerTest extends BaseStyleTest {
     assertEquals("FeaturePropertyA", ((SourceFunction) layer.getIconImage().getFunction()).getProperty());
     assertEquals(IntervalStops.class, layer.getIconImage().getFunction().getStops().getClass());
   }
+
 
   @Test
   public void testIconRotateAsConstant() {
@@ -1337,7 +1337,6 @@ public class SymbolLayerTest extends BaseStyleTest {
     assertEquals(1, ((ExponentialStops) layer.getTextRotate().getFunction().getStops()).size());
   }
 
-
   @Test
   public void testTextRotateAsIdentitySourceFunction() {
     checkViewIsDisplayed(R.id.mapView);
@@ -1445,6 +1444,7 @@ public class SymbolLayerTest extends BaseStyleTest {
     assertEquals(0.3f, stop.in.value, 0.001f);
     assertEquals(0.9f, stop.out, 0.001f);
   }
+
 
   @Test
   public void testTextPaddingAsConstant() {
